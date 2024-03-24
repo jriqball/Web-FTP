@@ -55,12 +55,15 @@ const updateFilterOptions = async () => {
         }
 
         // Update the extraction logic for filter options
-        const filterOptions = filterOptionsData
+        let filterOptions = filterOptionsData
             .map(option => option ? option.trim() : null)
             .filter(option => option !== null && option.trim() !== '');
 
-        // Log the extracted filter options
-        console.log('Extracted filter options:', filterOptions);
+        // Sort filter options in ascending order
+        filterOptions.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
+
+        // Log the extracted and sorted filter options
+        console.log('Extracted and sorted filter options:', filterOptions);
 
         // Populate filter options
         filterOptions.forEach(option => {
@@ -73,6 +76,7 @@ const updateFilterOptions = async () => {
         console.error('Error fetching or processing filter options:', error.message);
     }
 };
+
 
 // Function to apply filter
 const applyFilter = () => {
@@ -348,6 +352,7 @@ function handleLogin() {
     const filterOptions = document.getElementById('filterOptions');
     filterOptions.style.display = 'none';
 }
+
 
 // Function to sign out
 const signOut = () => {
